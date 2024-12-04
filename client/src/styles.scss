@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  // color
+  --background: #212121;
+  --sidebar: #171717;
+  --text: #ececec;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
