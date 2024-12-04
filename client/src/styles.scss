@@ -17,6 +17,20 @@ body {
   font-family: sans-serif;
 }
 
+.btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 a {
   text-decoration: none;
 }
