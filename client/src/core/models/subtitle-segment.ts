@@ -1,4 +1,4 @@
-export interface SubtitleEntrySrt {
+export interface SubtitleSegment {
   id: number;
   startTime: string;
   endTime: string;

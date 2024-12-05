@@ -1,6 +1,6 @@
-import { SubtitleEntrySrt } from "../models/subtitle-entry-srt";
+import { SubtitleSegment } from "../models/subtitle-segment";
 
-export const SAMPLE_SRT_SUBTITLES: SubtitleEntrySrt[] = [
+export const SAMPLE_SRT_SUBTITLES: SubtitleSegment[] = [
   {
     id: 1,
     startTime: '00:00:12,640',

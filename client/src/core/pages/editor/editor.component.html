@@ -1,5 +1,5 @@
-@let file = fileService.getFile();
-@let entries = entriesService.getEntries();
+@let file = fileStorage.getFile();
+@let entries = subsStorage.getSubtitles();
 
 <div class="content">
   <section id="file-select">
@@ -21,7 +21,7 @@
           #fileInput
         />
       </button>
-      <p>Or</p>
+      <p class="separator">Or</p>
       <button class="btn btn-input" (click)="clearFile(fileInput); createSample()">
         Create Sample File
       </button>

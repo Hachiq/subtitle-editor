@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { SubtitleEntrySrt } from '../models/subtitle-entry-srt';
+import { SubtitleSegment } from '../models/subtitle-segment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SrtService {
 
-  parseSrt(srtContent: string): SubtitleEntrySrt[] {
-    const entries: SubtitleEntrySrt[] = [];
+  parseSrt(srtContent: string): SubtitleSegment[] {
+    const entries: SubtitleSegment[] = [];
     
     // Split the content into blocks using double line breaks
     const blocks = srtContent.split(/\r?\n\r?\n/);

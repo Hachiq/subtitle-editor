@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FileService {
+export class FileStorageService {
   private selectedFile: File | null = null;
 
   setFile(file: File): void {

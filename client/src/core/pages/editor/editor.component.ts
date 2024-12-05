@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { SAMPLE_SRT_SUBTITLES } from '../../constants/sample-srt-subtitles';
-import { FileService } from '../../services/file.service';
-import { EntriesService } from '../../services/entries.service';
+import { FileStorageService } from '../../services/file-storage.service';
+import { SubtitlesStorageService } from '../../services/subtitles-storage.service';
 import { SrtService } from '../../services/srt.service';
 
 @Component({
@@ -12,8 +12,8 @@ import { SrtService } from '../../services/srt.service';
   styleUrl: './editor.component.scss'
 })
 export class EditorComponent {
-  public fileService = inject(FileService);
-  public entriesService = inject(EntriesService);
+  public fileStorage = inject(FileStorageService);
+  public subsStorage = inject(SubtitlesStorageService);
 
   private srtService = inject(SrtService);
 
@@ -21,15 +21,16 @@ export class EditorComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.fileService.setFile(file);
+      this.fileStorage.setFile(file);
       
       const validExtensions = ['srt', 'vtt'];
       const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
       if (fileExtension && validExtensions.includes(fileExtension)) {
         const reader = new FileReader();
         reader.onload = () => {
           const entries = this.srtService.parseSrt(reader.result as string)
-          this.entriesService.setEntries(entries);
+          this.subsStorage.setSubtitles(entries);
         };
         reader.readAsText(file);
       } else {
@@ -39,11 +40,11 @@ export class EditorComponent {
   }
 
   createSample() {
-    this.entriesService.setEntries(SAMPLE_SRT_SUBTITLES);
+    this.subsStorage.setSubtitles(SAMPLE_SRT_SUBTITLES);
   }
 
   clearFile(fileInput: HTMLInputElement): void {
     fileInput.value = '';
-    this.fileService.clearFile();
+    this.fileStorage.clearFile();
   }
 }
