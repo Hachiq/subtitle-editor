@@ -1,1 +1,18 @@
-<p>subtitle-item works!</p>
+<div class="item-container" [ngClass]="{'selected': selected}" (click)="selectSegment()">
+  <div class="id">{{ id }}</div>
+  <div class="timing">
+    <div class="time">
+      <span class="hours">{{startTime.h}}:</span>
+      <span class="minutes">{{startTime.m}}:</span>
+      <span class="seconds">{{startTime.s}}:</span>
+      <span class="miliseconds">{{startTime.ms}}</span>
+    </div>
+    <div class="time">
+      <span class="hours">{{endTime.h}}:</span>
+      <span class="minutes">{{endTime.m}}:</span>
+      <span class="seconds">{{endTime.s}}:</span>
+      <span class="miliseconds">{{endTime.ms}}</span>
+    </div>
+  </div>
+  <div class="text">{{ text }}</div>
+</div>

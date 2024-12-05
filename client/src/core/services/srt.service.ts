@@ -1,35 +1,37 @@
 import { Injectable } from '@angular/core';
 import { SubtitleSegment } from '../models/subtitle-segment';
+import { Time } from '../models/time';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SrtService {
 
-  parseSrt(srtContent: string): SubtitleSegment[] {
-    const entries: SubtitleSegment[] = [];
-    
-    // Split the content into blocks using double line breaks
-    const blocks = srtContent.split(/\r?\n\r?\n/);
+  parseSrt(srt: string): SubtitleSegment[] {
+    const subs: SubtitleSegment[] = [];
+    const regex = /(\d+)\s+([\d:,]+) --> ([\d:,]+)\s+([\s\S]*?)(?=\n\n|\n$|$)/g;
+    let match: RegExpExecArray | null;
   
-    for (const block of blocks) {
-      const lines = block.split(/\r?\n/);
+    while ((match = regex.exec(srt)) !== null) {
+      const id = parseInt(match[1], 10);
   
-      if (lines.length >= 3) {
-        const id = parseInt(lines[0], 10); // The first line is the ID
-        const timeMatch = lines[1].match(/(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})/);
-        
-        if (timeMatch) {
-          const startTime = timeMatch[1];
-          const endTime = timeMatch[2];
-          const text = lines.slice(2).join(' '); // Combine all text lines
+      // Parse time strings into Time objects
+      const startTime = this.parseTime(match[2]);
+      const endTime = this.parseTime(match[3]);
   
-          entries.push({ id, startTime, endTime, text });
-        }
-      }
+      const text = match[4].trim();
+      subs.push({ id, startTime, endTime, text });
     }
   
-    return entries;
+    return subs;
   }
+
+  parseTime(timeString: string): Time {
+    const [h, m, s, ms] = timeString
+      .replace(',', ':') // Replace ',' with ':' for easier splitting
+      .split(':')
+      .map((value) => parseInt(value, 10));
   
+    return { h, m, s, ms };
+  }
 }

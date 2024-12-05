@@ -1,5 +1,5 @@
 @let file = fileStorage.getFile();
-@let entries = subsStorage.getSubtitles();
+@let subtitles = subsStorage.getSubtitles();
 
 <div class="content">
   <section id="file-select">
@@ -28,12 +28,25 @@
     </div>
   </section>
   <section id="file-examine">
-    @for (item of entries; track $index) {
-      <div>{{item.id}}</div>
-      <div>{{item.startTime}}</div>
-      <div>{{item.endTime}}</div>
-      <div>{{item.text}}</div>
-    }
+    <div class="examine-container">
+      <div class="subs">
+        @for (item of subtitles; track $index) {
+          <app-subtitle-item [index]="$index"
+                              [selected]="selectedSegment?.id === item.id"
+                              [id]="item.id"
+                              [startTime]="item.startTime"
+                              [endTime]="item.endTime"
+                              [text]="item.text"
+                              (segmentSelected)="onSegmentSelected($event)">
+          </app-subtitle-item>
+        }
+      </div>
+      <div class="editor">
+        @if (selectedSegment) {
+          <app-subtitle-editor [subtitle]="selectedSegment"></app-subtitle-editor>
+        }
+      </div>
+    </div>
   </section>
 </div>
 

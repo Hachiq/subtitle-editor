@@ -3,11 +3,14 @@ import { SAMPLE_SRT_SUBTITLES } from '../../constants/sample-srt-subtitles';
 import { FileStorageService } from '../../services/file-storage.service';
 import { SubtitlesStorageService } from '../../services/subtitles-storage.service';
 import { SrtService } from '../../services/srt.service';
+import { SubtitleItemComponent } from '../../components/subtitle-item/subtitle-item.component';
+import { SubtitleEditorComponent } from "../../components/subtitle-editor/subtitle-editor.component";
+import { SubtitleSegment } from '../../models/subtitle-segment';
 
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [],
+  imports: [SubtitleItemComponent, SubtitleEditorComponent],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss'
 })
@@ -16,6 +19,12 @@ export class EditorComponent {
   public subsStorage = inject(SubtitlesStorageService);
 
   private srtService = inject(SrtService);
+
+  selectedSegment: SubtitleSegment | null = null;
+
+  onSegmentSelected(index: number) {
+    this.selectedSegment = this.subsStorage.getSubtitles()[index];
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -29,8 +38,9 @@ export class EditorComponent {
       if (fileExtension && validExtensions.includes(fileExtension)) {
         const reader = new FileReader();
         reader.onload = () => {
-          const entries = this.srtService.parseSrt(reader.result as string)
-          this.subsStorage.setSubtitles(entries);
+          const subs = this.srtService.parseSrt(reader.result as string)
+          this.subsStorage.setSubtitles(subs);
+          this.selectedSegment = null;
         };
         reader.readAsText(file);
       } else {
@@ -40,6 +50,7 @@ export class EditorComponent {
   }
 
   createSample() {
+    this.selectedSegment = null;
     this.subsStorage.setSubtitles(SAMPLE_SRT_SUBTITLES);
   }
 

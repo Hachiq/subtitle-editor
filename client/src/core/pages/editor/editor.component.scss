@@ -8,6 +8,7 @@
 
     .separator {
       font-weight: bold;
+      color: var(--primary);
     }
   
     .btn-input {
@@ -40,6 +41,39 @@
       
       .button-label {
         pointer-events: none;
+      }
+    }
+  }
+}
+
+#file-examine {
+  margin-top: 5rem;
+
+  .examine-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+
+    .subs {
+      width: 45%;
+    }
+
+    .editor {
+      width: 45%;
+    }
+
+    @media (max-width: 1000px) {
+      flex-direction: column;
+      gap: 1rem;
+
+      .editor {
+        order: -1;
+        width: 100%;
+      }
+  
+      .subs {
+        order: 0;
+        width: 100%;
       }
     }
   }
