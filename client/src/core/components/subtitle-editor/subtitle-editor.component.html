@@ -5,19 +5,43 @@
       <div class="timing">
         <span class="value">
           <label for="start-hours">Hours</label>
-          <input type="number" id="start-hours" formControlName="startH" name="startH" min="0" max="999">
+          <input type="number"
+                  id="start-hours"
+                  formControlName="startH"
+                  name="startH"
+                  min="0"
+                  max="999"
+                  (input)="restrictToMax($event, 999)">
         </span>
         <span class="value">
           <label for="start-minutes">Minutes</label>
-          <input type="number" id="start-minutes" formControlName="startM" name="startM" min="0" max="59">
+          <input type="number"
+                  id="start-minutes"
+                  formControlName="startM"
+                  name="startM"
+                  min="0"
+                  max="59"
+                  (input)="restrictToMax($event, 59)">
         </span>
         <span class="value">
           <label for="start-seconds">Seconds</label>
-          <input type="number" id="start-seconds" formControlName="startS" name="startS" min="0" max="59">
+          <input type="number"
+                  id="start-seconds"
+                  formControlName="startS"
+                  name="startS"
+                  min="0"
+                  max="59"
+                  (input)="restrictToMax($event, 59)">
         </span>
         <span class="value">
           <label for="start-milliseconds">Milliseconds</label>
-          <input type="number" id="start-milliseconds" formControlName="startMs" name="startMs" min="0" max="999">
+          <input type="number"
+                  id="start-milliseconds"
+                  formControlName="startMs"
+                  name="startMs"
+                  min="0"
+                  max="999"
+                  (input)="restrictToMax($event, 999)">
         </span>
       </div>
     </div>
@@ -27,19 +51,43 @@
       <div class="timing">
         <span class="value">
           <label for="end-hours">Hours</label>
-          <input type="number" id="end-hours" formControlName="endH" name="endH" min="0" max="999">
+          <input type="number"
+                  id="end-hours"
+                  formControlName="endH"
+                  name="endH"
+                  min="0"
+                  max="999"
+                  (input)="restrictToMax($event, 999)">
         </span>
         <span class="value">
           <label for="end-minutes">Minutes</label>
-          <input type="number" id="end-minutes" formControlName="endM" name="endM" min="0" max="59">
+          <input type="number"
+                  id="end-minutes"
+                  formControlName="endM"
+                  name="endM"
+                  min="0"
+                  max="59"
+                  (input)="restrictToMax($event, 59)">
         </span>
         <span class="value">
           <label for="end-seconds">Seconds</label>
-          <input type="number" id="end-seconds" formControlName="endS" name="endS" min="0" max="59">
+          <input type="number"
+                  id="end-seconds"
+                  formControlName="endS"
+                  name="endS"
+                  min="0"
+                  max="59"
+                  (input)="restrictToMax($event, 59)">
         </span>
         <span class="value">
           <label for="end-milliseconds">Milliseconds</label>
-          <input type="number" id="end-milliseconds" formControlName="endMs" name="endMs" min="0" max="999">
+          <input type="number"
+                  id="end-milliseconds"
+                  formControlName="endMs"
+                  name="endMs"
+                  min="0"
+                  max="999"
+                  (input)="restrictToMax($event, 999)">
         </span>
       </div>
     </div>

@@ -98,4 +98,14 @@ export class SubtitleEditorComponent implements OnChanges {
 
     return sub;
   }
+
+  restrictToMax(event: Event, max: number): void {
+    const input = event.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    const controlName = input.getAttribute('formControlName');
+  
+    if (value > max && controlName) {
+      this.editorForm.get(controlName)?.setValue(max);
+    }
+  }
 }
