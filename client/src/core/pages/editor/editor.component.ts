@@ -21,9 +21,21 @@ export class EditorComponent {
   private srtService = inject(SrtService);
 
   selectedSegment: SubtitleSegment | null = null;
+  selectedSegmentIndex: number | null = null;
 
   onSegmentSelected(index: number) {
+    if (this.selectedSegmentIndex === index) {
+      this.selectedSegment = null;
+      this.selectedSegmentIndex = null;
+      return;
+    }
     this.selectedSegment = this.subsStorage.getSubtitles()[index];
+    this.selectedSegmentIndex = index;
+  }
+
+  onSegmentSaved() {
+    this.selectedSegment = null;
+    this.selectedSegmentIndex = null;
   }
 
   onFileSelected(event: Event): void {

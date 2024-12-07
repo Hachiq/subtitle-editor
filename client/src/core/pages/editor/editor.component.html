@@ -42,8 +42,11 @@
         }
       </div>
       <div class="editor">
-        @if (selectedSegment) {
-          <app-subtitle-editor [subtitle]="selectedSegment"></app-subtitle-editor>
+        @if (selectedSegment && selectedSegmentIndex !== null) {
+          <app-subtitle-editor [subtitle]="selectedSegment"
+                               [index]="selectedSegmentIndex"
+                               (saved)="onSegmentSaved()">
+          </app-subtitle-editor>
         }
       </div>
     </div>
