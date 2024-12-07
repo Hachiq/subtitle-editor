@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Time } from '../../models/time';
 import { CommonModule } from '@angular/common';
+import { TimeFormatterPipe } from '../../pipes/time-formatter.pipe';
 
 @Component({
   selector: 'app-subtitle-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TimeFormatterPipe],
   templateUrl: './subtitle-item.component.html',
   styleUrl: './subtitle-item.component.scss'
 })
