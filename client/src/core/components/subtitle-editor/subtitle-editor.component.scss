@@ -1,6 +1,7 @@
 .editor-container {
   margin: 1rem;
   padding: 1rem;
+  color: var(--background);
   background-color: var(--secondary);
   border-radius: .5rem;
 
@@ -17,6 +18,25 @@
       input {
         width: 40px;
       }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+
+    .btn-save {
+      display: inline-block;
+      position: relative;
+      align-self: center;
+      width: 200px;
+      padding: .5rem 2rem;
+      background-color: var(--primary);
+      color: var(--background);
+      font-size: 100%;
+      text-align: center;
+      border-radius: 4px;
     }
   }
 }
