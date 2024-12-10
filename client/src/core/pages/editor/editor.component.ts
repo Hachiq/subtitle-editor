@@ -6,11 +6,12 @@ import { SrtService } from '../../services/srt.service';
 import { SubtitleItemComponent } from '../../components/subtitle-item/subtitle-item.component';
 import { SubtitleEditorComponent } from "../../components/subtitle-editor/subtitle-editor.component";
 import { SubtitleSegment } from '../../models/subtitle-segment';
+import { AddSubtitleItemComponent } from '../../components/add-subtitle-item/add-subtitle-item.component';
 
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [SubtitleItemComponent, SubtitleEditorComponent],
+  imports: [SubtitleItemComponent, SubtitleEditorComponent, AddSubtitleItemComponent],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss'
 })
