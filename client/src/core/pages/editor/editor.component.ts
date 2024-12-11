@@ -26,17 +26,20 @@ export class EditorComponent {
 
   onSegmentSelected(index: number) {
     if (this.selectedSegmentIndex === index) {
-      this.selectedSegment = null;
-      this.selectedSegmentIndex = null;
+      this.clearSelectedSegment();
       return;
     }
     this.selectedSegment = this.subsStorage.getSubtitles()[index];
     this.selectedSegmentIndex = index;
   }
 
-  onSegmentSaved() {
+  clearSelectedSegment() {
     this.selectedSegment = null;
     this.selectedSegmentIndex = null;
+  }
+
+  onSegmentSaved() {
+    this.clearSelectedSegment();
   }
 
   onFileSelected(event: Event): void {
@@ -63,7 +66,7 @@ export class EditorComponent {
   }
 
   createSample() {
-    this.selectedSegment = null;
+    this.clearSelectedSegment();
     this.subsStorage.setSubtitles(SAMPLE_SRT_SUBTITLES);
   }
 

@@ -1,5 +1,5 @@
 .editor-container {
-  margin: 1rem;
+  margin: 0 1rem;
   padding: 1rem;
   color: var(--background);
   background-color: var(--secondary);
@@ -18,6 +18,13 @@
       input {
         width: 40px;
       }
+    }
+  }
+
+  .text {
+    textarea {
+      width: 100%;
+      resize: vertical;
     }
   }
 

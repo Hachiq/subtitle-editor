@@ -28,6 +28,8 @@ export class SubtitleEditorComponent implements OnChanges {
     endM: new FormControl(0, [Validators.min(0), Validators.max(59), Validators.required]),
     endS: new FormControl(0, [Validators.min(0), Validators.max(59), Validators.required]),
     endMs: new FormControl(0, [Validators.min(0), Validators.max(999), Validators.required]),
+
+    text: new FormControl('', [Validators.maxLength(300)]),
   })
 
   editor = inject(SubEditorService);
@@ -56,7 +58,7 @@ export class SubtitleEditorComponent implements OnChanges {
   }
 
   setInitialValues(): void {
-    const { startTime, endTime } = this.subtitle;
+    const { startTime, endTime, text } = this.subtitle;
 
     this.editorForm.setValue({
       startH: startTime.h,
@@ -67,6 +69,7 @@ export class SubtitleEditorComponent implements OnChanges {
       endM: endTime.m,
       endS: endTime.s,
       endMs: endTime.ms,
+      text: text
     });
   }
 
@@ -88,13 +91,16 @@ export class SubtitleEditorComponent implements OnChanges {
     return { h, m, s, ms }
   }
 
+  getTextFromControls(): string {
+    return this.editorForm.controls.text.value ?? '';
+  }
+
   createNewSubtitleSegment() : SubtitleSegment {
     let sub = this.subtitle;
 
     sub.startTime = this.getStartTimeFromControls();
     sub.endTime = this.getEndTimeFromControls();
-
-    // Other properties here
+    sub.text = this.getTextFromControls();
 
     return sub;
   }
