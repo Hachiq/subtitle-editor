@@ -32,7 +32,9 @@
       <div class="subs">
         @for (item of subtitles; track $index) {
           @if ($first) {
-            <app-add-subtitle-item></app-add-subtitle-item>
+            <app-add-subtitle-item [index]="$index"
+                                    (segmentAdded)="onSegmentSelected($event)">
+            </app-add-subtitle-item>
           }
           <app-subtitle-item [index]="$index"
                               [selected]="selectedSegment?.id === item.id"
@@ -42,7 +44,9 @@
                               [text]="item.text"
                               (segmentSelected)="onSegmentSelected($event)">
           </app-subtitle-item>
-          <app-add-subtitle-item></app-add-subtitle-item>
+          <app-add-subtitle-item [index]="$index + 1"
+                                  (segmentAdded)="onSegmentSelected($event)">
+          </app-add-subtitle-item>
         }
       </div>
       <div class="editor">

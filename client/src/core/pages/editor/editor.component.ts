@@ -25,10 +25,6 @@ export class EditorComponent {
   selectedSegmentIndex: number | null = null;
 
   onSegmentSelected(index: number) {
-    if (this.selectedSegmentIndex === index) {
-      this.clearSelectedSegment();
-      return;
-    }
     this.selectedSegment = this.subsStorage.getSubtitles()[index];
     this.selectedSegmentIndex = index;
   }

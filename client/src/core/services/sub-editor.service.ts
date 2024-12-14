@@ -73,4 +73,31 @@ export class SubEditorService {
   convertTimeToMilliseconds(time: Time): number {
     return time.h * 3600000 + time.m * 60000 + time.s * 1000 + time.ms;
   }
+
+  /**
+   * Inserts a new subtitle segment at the specified index in the subtitles array.
+   * The IDs of all segments are updated to ensure sequential order after insertion.
+   *
+   * @param subtitles - The array of subtitle segments to modify.
+   * @param atIndex - The position to insert the new segment. If out of bounds,
+   * it defaults to the start or end of the array.
+   */
+  addSegment(subtitles: SubtitleSegment[], atIndex: number): void {
+    // Ensure atIndex is within valid bounds
+    atIndex = Math.max(0, Math.min(atIndex, subtitles.length));
+
+    const segmentBefore = subtitles[atIndex - 1];
+    const segmentAfter = subtitles[atIndex];
+
+    const newSegment: SubtitleSegment = {
+      id: segmentAfter ? segmentAfter.id : (segmentBefore ? segmentBefore.id + 1 : 1),
+      startTime: segmentBefore ? segmentBefore.endTime : segmentAfter?.startTime ?? { h: 0, m: 0, s: 0, ms: 0 },
+      endTime: segmentAfter ? segmentAfter.startTime : segmentBefore?.endTime ?? { h: 0, m: 0, s: 0, ms: 0 },
+      text: '',
+    };
+
+    // Insert the new segment and update IDs
+    subtitles.splice(atIndex, 0, newSegment);
+    subtitles.forEach((segment, index) => (segment.id = index + 1));
+  }
 }
