@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { SubEditorService } from '../../services/sub-editor.service';
 import { SubtitlesStorageService } from '../../services/subtitles-storage.service';
 import { Time } from '../../models/time';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-subtitle-editor',
@@ -34,13 +35,26 @@ export class SubtitleEditorComponent implements OnChanges {
 
   editor = inject(SubEditorService);
   subsStorage = inject(SubtitlesStorageService);
+  modal = inject(ModalService);
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setInitialValues();
   }
 
+  startTimeBiggerThanEndTime(): boolean {
+    const startTime = this.editor.convertTimeToMilliseconds(this.getStartTimeFromControls());
+    const endTime = this.editor.convertTimeToMilliseconds(this.getEndTimeFromControls());
+
+    return startTime - endTime >= 0;
+  }
+
   save() {
     if (this.editorForm.invalid) {
+      return;
+    }
+
+    if (this.startTimeBiggerThanEndTime()) {
+      this.modal.info('Start time cannot be higher than end time', 'Info');
       return;
     }
 
