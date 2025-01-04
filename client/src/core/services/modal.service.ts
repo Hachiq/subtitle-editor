@@ -13,126 +13,97 @@ export class ModalService {
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }
-
+  
   open(
     content: string,
     title: string = 'Modal Title',
     onAccept?: () => void,
     onCancel?: () => void
   ): void {
-    // Create the overlay
-    const overlay = this.renderer.createElement('div');
-    this.renderer.addClass(overlay, 'modal-overlay');
+    const overlay = this.createOverlay();
+    const modal = this.createModal(title, content);
 
-    // Create the modal
-    const modal = this.renderer.createElement('div');
-    this.renderer.addClass(modal, 'modal-dialog');
-
-    // Create the header
-    const header = this.renderer.createElement('div');
-    this.renderer.addClass(header, 'modal-header');
-    const headerText = this.renderer.createText(title);
-    this.renderer.appendChild(header, headerText);
-
-    // Create the content
-    const body = this.renderer.createElement('div');
-    this.renderer.addClass(body, 'modal-body');
-    const bodyContent = this.renderer.createText(content);
-    this.renderer.appendChild(body, bodyContent);
-
-    // Create the footer with buttons
+    // Footer with buttons
     const footer = this.renderer.createElement('div');
     this.renderer.addClass(footer, 'modal-footer');
 
-    // Accept button
-    const acceptButton = this.renderer.createElement('button');
-    this.renderer.addClass(acceptButton, 'modal-accept-button');
-    const acceptButtonText = this.renderer.createText('Accept');
-    this.renderer.appendChild(acceptButton, acceptButtonText);
-    this.renderer.listen(acceptButton, 'click', () => {
+    // Accept Button
+    const acceptButton = this.createButton('Accept', 'modal-accept-button', () => {
       if (onAccept) onAccept();
       this.close(overlay);
     });
 
-    // Cancel button
-    const cancelButton = this.renderer.createElement('button');
-    this.renderer.addClass(cancelButton, 'modal-cancel-button');
-    const cancelButtonText = this.renderer.createText('Cancel');
-    this.renderer.appendChild(cancelButton, cancelButtonText);
-    this.renderer.listen(cancelButton, 'click', () => {
+    // Cancel Button
+    const cancelButton = this.createButton('Cancel', 'modal-cancel-button', () => {
       if (onCancel) onCancel();
       this.close(overlay);
     });
 
     this.renderer.appendChild(footer, acceptButton);
     this.renderer.appendChild(footer, cancelButton);
-
-    // Append header, body, and footer to modal
-    this.renderer.appendChild(modal, header);
-    this.renderer.appendChild(modal, body);
     this.renderer.appendChild(modal, footer);
-
-    // Append modal to overlay
     this.renderer.appendChild(overlay, modal);
-
-    // Append overlay to the document body
     this.renderer.appendChild(this.document.body, overlay);
   }
 
-  // TODO: Needs a lot of refactoring
+  // Info modal with only an OK button
+  info(content: string, title: string = 'Information', onOk?: () => void): void {
+    const overlay = this.createOverlay();
+    const modal = this.createModal(title, content);
 
-  info(
-    content: string,
-    title: string = 'Modal Title',
-    onOk?: () => void
-  ): void {
-    // Create the overlay
-    const overlay = this.renderer.createElement('div');
-    this.renderer.addClass(overlay, 'modal-overlay');
-
-    // Create the modal
-    const modal = this.renderer.createElement('div');
-    this.renderer.addClass(modal, 'modal-dialog');
-
-    // Create the header
-    const header = this.renderer.createElement('div');
-    this.renderer.addClass(header, 'modal-header');
-    const headerText = this.renderer.createText(title);
-    this.renderer.appendChild(header, headerText);
-
-    // Create the content
-    const body = this.renderer.createElement('div');
-    this.renderer.addClass(body, 'modal-body');
-    const bodyContent = this.renderer.createText(content);
-    this.renderer.appendChild(body, bodyContent);
-
-    // Create the footer with buttons
+    // Footer with OK button
     const footer = this.renderer.createElement('div');
     this.renderer.addClass(footer, 'modal-footer');
 
-    // Ok button
-    const okButton = this.renderer.createElement('button');
-    this.renderer.addClass(okButton, 'modal-accept-button');
-    const okButtonText = this.renderer.createText('Ok');
-    this.renderer.appendChild(okButton, okButtonText);
-    this.renderer.listen(okButton, 'click', () => {
+    const okButton = this.createButton('OK', 'modal-accept-button', () => {
       if (onOk) onOk();
       this.close(overlay);
     });
 
     this.renderer.appendChild(footer, okButton);
-
-    // Append header, body, and footer to modal
-    this.renderer.appendChild(modal, header);
-    this.renderer.appendChild(modal, body);
     this.renderer.appendChild(modal, footer);
-
-    // Append modal to overlay
     this.renderer.appendChild(overlay, modal);
-
-    // Append overlay to the document body
     this.renderer.appendChild(this.document.body, overlay);
   }
+
+  private createOverlay(): HTMLElement {
+    const overlay = this.renderer.createElement('div');
+    this.renderer.addClass(overlay, 'modal-overlay');
+    return overlay;
+  }
+
+  // Utility: Create a modal
+  private createModal(title: string, content: string): HTMLElement {
+    const modal = this.renderer.createElement('div');
+    this.renderer.addClass(modal, 'modal-dialog');
+
+    const header = this.renderer.createElement('div');
+    this.renderer.addClass(header, 'modal-header');
+    this.renderer.appendChild(header, this.renderer.createText(title));
+
+    const body = this.renderer.createElement('div');
+    this.renderer.addClass(body, 'modal-body');
+    this.renderer.appendChild(body, this.renderer.createText(content));
+
+    this.renderer.appendChild(modal, header);
+    this.renderer.appendChild(modal, body);
+    return modal;
+  }
+
+  // Utility: Create a button
+  private createButton(
+    text: string,
+    cssClass: string,
+    onClick: () => void
+  ): HTMLElement {
+    const button = this.renderer.createElement('button');
+    this.renderer.setAttribute(button, 'type', 'button');
+    this.renderer.addClass(button, cssClass);
+    this.renderer.appendChild(button, this.renderer.createText(text));
+    this.renderer.listen(button, 'click', onClick);
+    return button;
+  }
+
 
   close(overlay: HTMLElement): void {
     this.renderer.removeChild(this.document.body, overlay);
