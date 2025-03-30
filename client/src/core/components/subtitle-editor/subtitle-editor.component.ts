@@ -65,7 +65,7 @@ export class SubtitleEditorComponent implements OnChanges {
     subs[this.index] = this.createNewSubtitleSegment();
 
     if (endTimeDifference) {
-      this.editor.adjustSubtitleTimesFromIndex(subs, this.index + 1, endTimeDifference);
+      this.editor.adjustSubtitleTimesFromIndex(subs, this.index + 1, endTimeDifference, 'forward', 'add');
     }
 
     this.saved.emit();

@@ -7,22 +7,43 @@ import { Time } from '../models/time';
 })
 export class SubEditorService {
   /**
-   * Adjusts the start and end times of subtitles from a specified index by a given time offset.
+   * Adjusts the start and end times of subtitles based on the specified range and time offset.
    * 
    * @param subtitles - The list of subtitle segments to modify.
    * @param fromIndex - The index from which to start applying the time adjustment.
-   * @param timeOffsetMs - The time offset in milliseconds to add to each subtitle's start and end times.
+   * @param timeOffsetMs - The time offset in milliseconds to add or subtract.
+   * @param direction - The direction of adjustment:
+   *   - 'forward': Adjust from the specified index to the end.
+   *   - 'backward': Adjust from the start to the specified index.
+   * @param operation - The operation to perform:
+   *   - 'add': Add the time offset.
+   *   - 'subtract': Subtract the time offset.
    */
-  adjustSubtitleTimesFromIndex(subtitles: SubtitleSegment[], fromIndex: number, timeOffsetMs: number): void {
-    if (fromIndex < 0 || fromIndex >= subtitles.length) {
+  adjustSubtitleTimesFromIndex(
+    subtitles: SubtitleSegment[],
+    fromIndex: number,
+    timeOffsetMs: number,
+    direction: 'forward' | 'backward',
+    operation: 'add' | 'subtract'
+  ): void {
+    if (fromIndex < 0 || fromIndex > subtitles.length) {
       console.warn("Invalid starting index provided.");
       return;
     }
 
+    const adjustTime = (time: Time, offset: number): Time => {
+      return operation === 'add'
+        ? this.addTimeOffset(time, offset)
+        : this.addTimeOffset(time, -offset);
+    };
+
     subtitles.forEach((subtitle, index) => {
-      if (index >= fromIndex) {
-        subtitle.startTime = this.addTimeOffset(subtitle.startTime, timeOffsetMs);
-        subtitle.endTime = this.addTimeOffset(subtitle.endTime, timeOffsetMs);
+      if (
+        (direction === 'forward' && index >= fromIndex) ||
+        (direction === 'backward' && index <= fromIndex)
+      ) {
+        subtitle.startTime = adjustTime(subtitle.startTime, timeOffsetMs);
+        subtitle.endTime = adjustTime(subtitle.endTime, timeOffsetMs);
       }
     });
   }
