@@ -50,6 +50,10 @@
         }
       </div>
       <div class="editor">
+        @if (subtitles.length > 0) {
+          <app-shifter></app-shifter>
+          <br>
+        }
         @if (selectedSegment && selectedSegmentIndex !== null) {
           <app-subtitle-editor [subtitle]="selectedSegment"
                                [index]="selectedSegmentIndex"

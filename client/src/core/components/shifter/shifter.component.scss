@@ -1,0 +1,23 @@
+.editor-container {
+    margin: 0 1rem;
+    padding: 1rem;
+    color: var(--background);
+    background-color: var(--secondary);
+    border-radius: .5rem;
+
+    .timing {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+    
+        .value {
+          label {
+            padding-right: .2rem;
+          }
+    
+          input {
+            width: 40px;
+          }
+        }
+      }
+}

@@ -7,11 +7,12 @@ import { SubtitleItemComponent } from '../../components/subtitle-item/subtitle-i
 import { SubtitleEditorComponent } from "../../components/subtitle-editor/subtitle-editor.component";
 import { SubtitleSegment } from '../../models/subtitle-segment';
 import { AddSubtitleItemComponent } from '../../components/add-subtitle-item/add-subtitle-item.component';
+import { ShifterComponent } from "../../components/shifter/shifter.component";
 
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [SubtitleItemComponent, SubtitleEditorComponent, AddSubtitleItemComponent],
+  imports: [SubtitleItemComponent, SubtitleEditorComponent, AddSubtitleItemComponent, ShifterComponent],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss'
 })
