@@ -56,13 +56,13 @@ export class SubEditorService {
    * @returns A new Time object with the adjusted time.
    */
   addTimeOffset(time: Time, offsetMs: number): Time {
-    const totalMs = time.ms + offsetMs;
-    const ms = totalMs % 1000;
-    const totalSeconds = time.s + Math.floor(totalMs / 1000);
-    const s = totalSeconds % 60;
-    const totalMinutes = time.m + Math.floor(totalSeconds / 60);
-    const m = totalMinutes % 60;
-    const h = time.h + Math.floor(totalMinutes / 60);
+    let totalMs = time.ms + offsetMs;
+    let ms = ((totalMs % 1000) + 1000) % 1000;
+    let totalSeconds = time.s + Math.floor(totalMs / 1000);
+    let s = ((totalSeconds % 60) + 60) % 60;
+    let totalMinutes = time.m + Math.floor(totalSeconds / 60);
+    let m = ((totalMinutes % 60) + 60) % 60;
+    let h = time.h + Math.floor(totalMinutes / 60);
 
     return { h, m, s, ms };
   }
