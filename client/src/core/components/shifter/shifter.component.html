@@ -25,6 +25,30 @@
                 </span>
             </div>
         </div>
+        <div class="options">
+            <h4>Options</h4>
+            <div class="inputs">
+                <span class="value">
+                    <label for="shiftDirection">Shift Direction</label>
+                    <select id="shiftDirection" formControlName="shiftDirection" name="shiftDirection">
+                        <option value="forward">Forward</option>
+                        <option value="backward">Backward</option>
+                    </select>
+                </span>
+                <span class="value">
+                    <label for="shiftType">Shift Type</label>
+                    <select id="shiftType" formControlName="shiftType" name="shiftType">
+                        <option value="add">Add</option>
+                        <option value="substract">Substract</option>
+                    </select>
+                </span>
+                <span class="value">
+                    <label for="index">From index</label>
+                    <input type="number" id="index" formControlName="index" name="index" min="1"
+                        (input)="restrictToMax($event, subtitlesStorage.getSubtitles().length)">
+                </span>
+            </div>
+        </div>
     </form>
     <div class="footer">
         <button class="btn btn-save" (click)="shift()">
