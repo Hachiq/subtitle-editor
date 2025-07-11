@@ -20,8 +20,15 @@ export class SubtitleItemComponent {
   @Input() text!: string;
 
   @Output() segmentSelected = new EventEmitter<number>();
+  @Output() segmentRemoved = new EventEmitter<number>();
 
   selectSegment() {
     this.segmentSelected.emit(this.index);
+  }
+
+  removeSegment($event: MouseEvent) {
+    $event.stopPropagation();
+    $event.preventDefault();
+    this.segmentRemoved.emit(this.index);
   }
 }

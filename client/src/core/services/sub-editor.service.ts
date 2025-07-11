@@ -100,4 +100,21 @@ export class SubEditorService {
     subtitles.splice(atIndex, 0, newSegment);
     subtitles.forEach((segment, index) => (segment.id = index + 1));
   }
+
+  /**
+   * Removes a subtitle segment at the specified index from the subtitles array.
+   * The IDs of all segments are updated to ensure sequential order after removal.
+   *
+   * @param subtitles - The array of subtitle segments to modify.
+   * @param index - The index of the segment to remove. If out of bounds, no action is taken.
+   */
+  removeSegment(subtitles: SubtitleSegment[], index: number): void {
+    if (index < 0 || index >= subtitles.length) {
+      console.warn("Invalid index provided for removal.");
+      return;
+    }
+
+    subtitles.splice(index, 1);
+    subtitles.forEach((segment, idx) => (segment.id = idx + 1));
+  }
 }

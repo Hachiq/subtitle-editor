@@ -24,6 +24,15 @@
   .text {
     align-self: baseline;
   }
+
+  .remove {
+    margin-left: auto;
+    cursor: pointer;
+
+    &:hover {
+      color: red;
+    }
+  }
 }
 
 .selected {

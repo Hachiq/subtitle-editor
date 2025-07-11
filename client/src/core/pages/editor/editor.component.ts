@@ -7,6 +7,7 @@ import { SubtitleItemComponent } from '../../components/subtitle-item/subtitle-i
 import { SubtitleEditorComponent } from "../../components/subtitle-editor/subtitle-editor.component";
 import { SubtitleSegment } from '../../models/subtitle-segment';
 import { AddSubtitleItemComponent } from '../../components/add-subtitle-item/add-subtitle-item.component';
+import { SubEditorService } from '../../services/sub-editor.service';
 
 @Component({
   selector: 'app-editor',
@@ -20,6 +21,7 @@ export class EditorComponent {
   public subsStorage = inject(SubtitlesStorageService);
 
   private srtService = inject(SrtService);
+  private editorService = inject(SubEditorService);
 
   selectedSegment: SubtitleSegment | null = null;
   selectedSegmentIndex: number | null = null;
@@ -59,6 +61,11 @@ export class EditorComponent {
         console.error('Invalid file type. Please select a .srt or .vtt file.');
       }
     }
+  }
+
+  onSegmentRemoved(index: number) {
+    this.editorService.removeSegment(this.subsStorage.getSubtitles(), index);
+    this.clearSelectedSegment();
   }
 
   createSample() {

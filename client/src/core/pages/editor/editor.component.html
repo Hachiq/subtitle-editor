@@ -42,7 +42,8 @@
                               [startTime]="item.startTime"
                               [endTime]="item.endTime"
                               [text]="item.text"
-                              (segmentSelected)="onSegmentSelected($event)">
+                              (segmentSelected)="onSegmentSelected($event)"
+                              (segmentRemoved)="onSegmentRemoved($event)">
           </app-subtitle-item>
           <app-add-subtitle-item [index]="$index + 1"
                                   (segmentAdded)="onSegmentSelected($event)">
