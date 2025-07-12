@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { SAMPLE_SRT_SUBTITLES } from '../../constants/sample-srt-subtitles';
 import { FileStorageService } from '../../services/file-storage.service';
 import { SubtitlesStorageService } from '../../services/subtitles-storage.service';
 import { SrtService } from '../../services/srt.service';
@@ -67,11 +66,6 @@ export class EditorComponent {
     const subs = this.subsStorage.getSubtitles();
     this.editorService.removeSegment(subs, index);
     this.clearSelectedSegment();
-  }
-
-  createSample() {
-    this.clearSelectedSegment();
-    this.subsStorage.setSubtitles(SAMPLE_SRT_SUBTITLES);
   }
 
   exportFile(): void {

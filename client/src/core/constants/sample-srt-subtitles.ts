@@ -1,5 +1,7 @@
 import { SubtitleSegment } from "../models/subtitle-segment";
 
+// TODO: Delete this file
+
 export const SAMPLE_SRT_SUBTITLES: SubtitleSegment[] = [
   {
     id: 1,
