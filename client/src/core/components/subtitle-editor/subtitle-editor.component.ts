@@ -44,6 +44,11 @@ export class SubtitleEditorComponent implements OnChanges {
       return;
     }
 
+    if (this.startTimeIsMoreThanEndTime()) {
+      alert('Start time cannot be greater than end time.');
+      return;
+    }
+
     const subs = this.subsStorage.getSubtitles();
 
     const endTimeDifference = this.editor.calculateTimeDifference(this.subtitle.endTime, this.getEndTimeFromControls());
@@ -113,5 +118,13 @@ export class SubtitleEditorComponent implements OnChanges {
     if (value > max && controlName) {
       this.editorForm.get(controlName)?.setValue(max);
     }
+  }
+
+  startTimeIsMoreThanEndTime(): boolean {
+    const startTime = this.getStartTimeFromControls();
+    const endTime = this.getEndTimeFromControls();
+    const difference = this.editor.calculateTimeDifference(startTime, endTime);
+
+    return difference < 0;
   }
 }

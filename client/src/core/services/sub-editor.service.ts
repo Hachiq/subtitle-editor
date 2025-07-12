@@ -35,13 +35,18 @@ export class SubEditorService {
    * @returns A new Time object with the adjusted time.
    */
   addTimeOffset(time: Time, offsetMs: number): Time {
-    const totalMs = time.ms + offsetMs;
+    // Convert the original time to milliseconds
+    let totalMs = time.h * 3600000 + time.m * 60000 + time.s * 1000 + time.ms + offsetMs;
+
+    // Clamp to zero if negative
+    totalMs = Math.max(0, totalMs);
+
+    const h = Math.floor(totalMs / 3600000);
+    totalMs %= 3600000;
+    const m = Math.floor(totalMs / 60000);
+    totalMs %= 60000;
+    const s = Math.floor(totalMs / 1000);
     const ms = totalMs % 1000;
-    const totalSeconds = time.s + Math.floor(totalMs / 1000);
-    const s = totalSeconds % 60;
-    const totalMinutes = time.m + Math.floor(totalSeconds / 60);
-    const m = totalMinutes % 60;
-    const h = time.h + Math.floor(totalMinutes / 60);
 
     return { h, m, s, ms };
   }
@@ -53,10 +58,7 @@ export class SubEditorService {
    * @param endTime - The subtitle's end time.
    * @returns The difference in milliseconds or `null` if `initialEndTime` is not provided.
    */
-  calculateTimeDifference(initialEndTime: Time | undefined, endTime: Time): number | null {
-    if (!initialEndTime) {
-      return null;
-    }
+  calculateTimeDifference(initialEndTime: Time, endTime: Time): number {
 
     const initialEndTimeMs = this.convertTimeToMilliseconds(initialEndTime);
     const endTimeMs = this.convertTimeToMilliseconds(endTime);
