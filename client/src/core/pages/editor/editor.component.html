@@ -21,10 +21,10 @@
           #fileInput
         />
       </button>
-      <button class="btn btn-input" (click)="exportFile()">
+      <button class="btn btn-input" [disabled]="!file || !subtitles.length" (click)="exportFile()">
         Export
       </button>
-      <button class="btn btn-input" (click)="clearFile(fileInput)">
+      <button class="btn btn-input" [disabled]="!file || !subtitles.length" (click)="resetAll(fileInput)">
         Clear
       </button>
     </div>

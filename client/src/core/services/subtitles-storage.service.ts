@@ -14,4 +14,8 @@ export class SubtitlesStorageService {
   getSubtitles(): SubtitleSegment[] {
     return this.subtitles;
   }
+
+  clearSubtitles(): void {
+    this.subtitles = [];
+  }
 }

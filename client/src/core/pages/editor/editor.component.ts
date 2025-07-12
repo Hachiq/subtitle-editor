@@ -89,8 +89,10 @@ export class EditorComponent {
     document.body.removeChild(a);
   }
 
-  clearFile(fileInput: HTMLInputElement): void {
+  resetAll(fileInput: HTMLInputElement): void {
     fileInput.value = '';
     this.fileStorage.clearFile();
+    this.clearSelectedSegment();
+    this.subsStorage.clearSubtitles();
   }
 }
