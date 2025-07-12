@@ -34,4 +34,17 @@ export class SrtService {
   
     return { h, m, s, ms };
   }
+
+  formatTime(time: Time): string {
+    const pad = (num: number) => String(num).padStart(2, '0');
+    return `${pad(time.h)}:${pad(time.m)}:${pad(time.s)},${String(time.ms).padStart(3, '0')}`;
+  }
+
+  generateSrt(subtitles: SubtitleSegment[]): string {
+    return subtitles.map(sub => {
+      const startTime = this.formatTime(sub.startTime);
+      const endTime = this.formatTime(sub.endTime);
+      return `${sub.id}\n${startTime} --> ${endTime}\n${sub.text}\n`;
+    }).join('\n');
+  }
 }

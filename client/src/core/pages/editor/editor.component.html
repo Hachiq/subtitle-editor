@@ -9,7 +9,7 @@
           @if (file) {
             {{file.name}}
           } @else {
-            Upload Subtitle File
+            Upload
           }
         </label>
         <input
@@ -21,7 +21,12 @@
           #fileInput
         />
       </button>
-      <p class="separator">Or</p>
+      <button class="btn btn-input" (click)="exportFile()">
+        Export
+      </button>
+      <button class="btn btn-input" (click)="clearFile(fileInput)">
+        Clear
+      </button>
       <button class="btn btn-input" (click)="clearFile(fileInput); createSample()">
         Create Sample File
       </button>

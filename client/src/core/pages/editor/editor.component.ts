@@ -64,13 +64,35 @@ export class EditorComponent {
   }
 
   onSegmentRemoved(index: number) {
-    this.editorService.removeSegment(this.subsStorage.getSubtitles(), index);
+    const subs = this.subsStorage.getSubtitles();
+    this.editorService.removeSegment(subs, index);
     this.clearSelectedSegment();
   }
 
   createSample() {
     this.clearSelectedSegment();
     this.subsStorage.setSubtitles(SAMPLE_SRT_SUBTITLES);
+  }
+
+  exportFile(): void {
+    const subs = this.subsStorage.getSubtitles();
+    if (subs.length === 0) {
+      console.error('No subtitles to export.');
+      return;
+    }
+    
+    const fileContent = this.srtService.generateSrt(subs);
+    const blob = new Blob([fileContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = this.fileStorage.getFile()?.name || 'subtitles.srt';
+    document.body.appendChild(a);
+    a.click();
+    
+    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 
   clearFile(fileInput: HTMLInputElement): void {
