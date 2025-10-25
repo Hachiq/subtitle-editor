@@ -5,22 +5,22 @@
   <section id="file-select">
     <div class="buttons">
       <button class="btn btn-input">
-        <label for="sub-input" class="button-label" id="fileLabel">
-          @if (file) {
-            {{file.name}}
-          } @else {
-            Upload
-          }
-        </label>
-        <input
-          type="file"
-          accept=".srt,.vtt"
-          id="sub-input"
-          class="hidden-input"
-          (change)="onFileSelected($event)"
-          #fileInput
-        />
-      </button>
+      <label for="sub-input" class="button-label" id="fileLabel">
+        @if (file) {
+          <span class="file-name">{{ file.name }}</span>
+        } @else {
+          Upload
+        }
+      </label>
+      <input
+        type="file"
+        accept=".srt,.vtt"
+        id="sub-input"
+        class="hidden-input"
+        (change)="onFileSelected($event)"
+        #fileInput
+      />
+    </button>
       <button class="btn btn-input" [disabled]="!file || !subtitles.length" (click)="exportFile()">
         Export
       </button>
