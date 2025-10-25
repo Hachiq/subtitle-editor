@@ -8,6 +8,10 @@
     font-size: 200%;
     font-weight: bold;
     text-align: center;
+
+    .short {
+      display: none;
+    }
   }
 
   .link-item {
@@ -21,8 +25,44 @@
       color: var(--text);
       transition: background-color .2s ease;
 
+      .short {
+        display: none;
+      }
+
       &:hover {
         background-color: var(--background);
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .navigation {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0.5rem 0;
+
+    .logo {
+      padding: 0 1rem;
+      .short {
+        display: inline;
+      }
+      .full {
+        display: none;
+      }
+    }
+
+    .link-item {
+      margin: 0;
+
+      a {
+        .short {
+          display: inline;
+        }
+        .full {
+          display: none;
+        }
       }
     }
   }

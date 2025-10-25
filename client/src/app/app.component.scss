@@ -13,3 +13,25 @@
     overflow: auto;
   }
 }
+
+@media (max-width: 650px) {
+  .container {
+    flex-direction: column; /* stack vertically */
+    height: 100vh; /* full viewport height */
+
+    .main {
+      flex: 1; /* take all available vertical space */
+      overflow: auto;
+    }
+
+    .sidebar {
+      height: unset;
+      flex-shrink: 0; /* don’t shrink */
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      order: 2;
+    }
+  }
+}
