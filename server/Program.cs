@@ -24,11 +24,26 @@ public class Program
 
         builder.Services.AddSingleton<TranscriptionService>();
 
+        builder.Services.AddCors(options =>
+            options.AddPolicy(
+                name: "NgOrigins",
+                policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                }
+            )
+        );
+
         builder.Services.AddControllers();
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
+
+        app.UseCors("NgOrigins");
 
         app.UseAuthorization();
 

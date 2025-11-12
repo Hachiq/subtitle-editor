@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MediaFileStorageService } from '../../services/media-file-storage.service';
+import { GeneratorService } from '../../services/generator.service';
 
 @Component({
   selector: 'app-generator',
@@ -14,6 +15,7 @@ export class GeneratorComponent {
   isAudio: boolean = false;
 
   mediaFileService = inject(MediaFileStorageService);
+  generatorService = inject(GeneratorService);
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -28,5 +30,21 @@ export class GeneratorComponent {
       const fileURL = URL.createObjectURL(file);
       this.previewUrl = fileURL;
     }
+  }
+
+  generateSubtitles(): void {
+    const file = this.mediaFileService.getFile();
+    if (!file) {
+      console.error('No media file selected.');
+      return;
+    }
+    this.generatorService.generate(file).subscribe({
+      next: (response) => {
+        console.log('Subtitle generation response:', response);
+      },
+      error: (error) => {
+        console.error('Error generating subtitles:', error);
+      }
+    });
   }
 }
