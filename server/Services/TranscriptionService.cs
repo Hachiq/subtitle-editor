@@ -1,19 +1,12 @@
 ﻿using OpenAI;
 using OpenAI.Audio;
+using SubEditor.Constants;
 
 namespace SubEditor.Services;
 
-public class TranscriptionService
+public class TranscriptionService(OpenAIClient client)
 {
-    private readonly AudioClient _client;
-
-    public TranscriptionService(IConfiguration config)
-    {
-        // TODO: Handle missing API key scenario.
-        // TODO: Consider using dependency injection for the AudioClient.
-        var apiKey = config["OpenAI:ApiKey"];
-        _client = new AudioClient("whisper-1", apiKey);
-    }
+    private readonly AudioClient _client = client.GetAudioClient(AiModels.Gpt4oMiniTranscribe);
 
     public async Task<string> TranscribeToSrtAsync(IFormFile file)
     {

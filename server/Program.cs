@@ -1,25 +1,40 @@
-namespace SubEditor
+using OpenAI;
+using SubEditor.Services;
+
+namespace SubEditor;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+
+        builder.Services.AddSingleton<OpenAIClient>(sp =>
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var config = sp.GetRequiredService<IConfiguration>();
+            var apiKey = config["OpenAI:ApiKey"];
 
-            // Add services to the container.
+            if (string.IsNullOrWhiteSpace(apiKey))
+                throw new InvalidOperationException("Missing OpenAI API key in configuration.");
 
-            builder.Services.AddControllers();
+            return new OpenAIClient(apiKey);
+        });
 
-            var app = builder.Build();
+        builder.Services.AddSingleton<TranscriptionService>();
 
-            // Configure the HTTP request pipeline.
+        builder.Services.AddControllers();
 
-            app.UseAuthorization();
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+
+        app.UseAuthorization();
 
 
-            app.MapControllers();
+        app.MapControllers();
 
-            app.Run();
-        }
+        app.Run();
     }
 }
