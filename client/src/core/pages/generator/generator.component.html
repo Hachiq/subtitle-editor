@@ -1,1 +1,41 @@
-<p>generator works!</p>
+<div class="content">
+    <button class="btn btn-input">
+        <label for="media-input" class="button-label" id="fileLabel">
+          @if (mediaFileService.hasFile()) {
+            <span class="file-name">{{ mediaFileService.getFile()?.name }}</span>
+          } @else {
+            Upload
+          }
+        </label>
+        <input
+          type="file"
+          accept=".mp3,.mp4"
+          id="media-input"
+          class="hidden-input"
+          (change)="onFileSelected($event)"
+          #fileInput
+        />
+    </button>
+
+    @if (mediaFileService.hasFile()) {
+        <div class="media-container">
+            <div class="media-preview">
+                @if (isVideo) {
+                    <video
+                        width="600"
+                        controls
+                        [src]="previewUrl"
+                    ></video>
+                } @else if (isAudio) {
+                    <audio
+                        controls
+                        [src]="previewUrl"
+                    ></audio>
+                }
+            </div>
+            <div class="actions">
+                <button class="btn">Generate Subtitles</button>
+            </div>
+        </div>
+    }
+</div>
