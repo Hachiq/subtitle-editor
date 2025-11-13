@@ -6,7 +6,7 @@ namespace SubEditor.Services;
 
 public class TranscriptionService(OpenAIClient client)
 {
-    private readonly AudioClient _client = client.GetAudioClient(AiModels.Gpt4oMiniTranscribe);
+    private readonly AudioClient _client = client.GetAudioClient(AiModels.WhisperV1);
 
     public async Task<string> TranscribeToSrtAsync(IFormFile file)
     {

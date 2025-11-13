@@ -25,4 +25,9 @@ public class MediaController(TranscriptionService _transcriptionService) : Contr
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+    [HttpGet("health")]
+    public IActionResult HealthCheck()
+    {
+        return Ok("MediaController is healthy.");
+    }
 }
